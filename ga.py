@@ -1,13 +1,28 @@
 import sys
-
 import numpy as np
 
+from typing import List
+from Bag import Bag
 
-def cal_pop_fitness(equation_inputs, pop):
+def cal_pop_fitness(itens: List[Bag], pop):
     # Cálculo do ‘fitness’ de cada solução na população atual
     # A função ‘fitness’ calcula a soma dos produtos entre cada
     # entrada e seu peso correspondente
-    return np.sum(pop * equation_inputs, axis=1)
+    points = [item.point for item in itens]
+    weights = [item.weight for item in itens]
+
+    sum_points = np.sum(pop * points, axis = 1)
+    sum_weights = np.sum(pop * weights, axis = 1)
+
+    results = []
+
+    for idx, point in enumerate(sum_points):
+        if sum_weights[idx] > 30:
+            point = 0
+        
+        results.append(point)
+
+    return results
 
 
 def select_mating_pool(pop, fitness, num_parents):
@@ -52,7 +67,7 @@ def mutation(offspring_crossover, mutation_rate=0.3):
         if np.random.random() < mutation_rate:
             # O valor aleatório a ser adicionado
             random_idx = np.random.randint(0, offspring_crossover.shape[1])
-            random_value = np.random.uniform(-1.0, 1.0, 1)
-            offspring_crossover[idx, random_idx] = offspring_crossover[idx, random_idx] + random_value
+            random_value = np.random.randint(2)
+            offspring_crossover[idx, random_idx] = random_value
 
     return offspring_crossover
