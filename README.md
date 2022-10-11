@@ -1,3 +1,3 @@
-<h1>genetic_algorithm</h1>
+<h1>Genetic Algorithm</h1>
 
 Alunos: Eduardo Effting e João Victor Effting
